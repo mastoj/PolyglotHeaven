@@ -1,1 +1,8 @@
-﻿{{message}}
+﻿<command-container submit-text="Create product" command-name="product" command="product">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" ng-model="product.Name">
+        <label for="name">Price</label>
+        <input type="number" class="form-control" id="price" placeholder="Price" ng-model="product.Price">
+    </div>
+</command-container>
