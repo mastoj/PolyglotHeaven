@@ -111,6 +111,8 @@
     <Content Include="content\app\order\order.html" />
     <Content Include="content\app\product\product.html" />
     <Content Include="content\app\customer\customer.html" />
+    <Content Include="content\external\angularui\ui-bootstrap-custom-0.10.0.min.js" />
+    <Content Include="content\external\angularui\ui-bootstrap-custom-tpls-0.10.0.min.js" />
     <Content Include="content\external\angular\angular-route.min.js" />
     <Content Include="content\external\angular\angular.min.js" />
     <Content Include="content\external\bootstrap\css\bootstrap-theme.css" />
@@ -167,6 +169,10 @@
     <ProjectReference Include="..\PolyglotHeaven.Infrastructure\PolyglotHeaven.Infrastructure.csproj">
       <Project>{57ae018a-ba49-471d-97d7-c4ad2040d4b0}</Project>
       <Name>PolyglotHeaven.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PolyglotHeaven.Service\PolyglotHeaven.Service.csproj">
+      <Project>{a78a0026-6ce5-4864-914d-07f4cde4a4db}</Project>
+      <Name>PolyglotHeaven.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

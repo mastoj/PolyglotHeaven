@@ -1,7 +1,11 @@
 ﻿<command-container submit-text="Create customer" command-name="order" command="order">
     <div class="form-group">
         <label for="name">Select customer</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter name" ng-model="order.Name">
+        <input type="text" class="form-control" id="name" placeholder="Search for customer" ng-model="order.Customer"
+               typeahead="customer as customer.Name for customer in getCustomers()" typeahead-editable="false"/>
+               <!--typeahead-on-select="customerSelected(order, $item)">-->
+        
+        <!--typeahead-input-formatter="$model.Name"-->
     </div>
     <div class="form-group order-items">
         <label for="name">Add order items</label>
@@ -18,3 +22,6 @@
         <input type="button" ng-click="addItem()" value="Add item to list" />
     </div>
 </command-container>
+        <!--<input type="text" class="form-control" id="name" placeholder="Search for customer" ng-model="order.Customer"
+               typeahead="customer in getCustomers()" typeahead-input-formatter="$model.Name" typeahead-editable="false"
+               typeahead-on-select="customerSelected(order, $item)">-->

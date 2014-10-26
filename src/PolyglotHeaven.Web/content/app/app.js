@@ -1,4 +1,4 @@
-﻿var shopApp = angular.module('shopApp', ['ngRoute']);
+﻿var shopApp = angular.module('shopApp', ['ngRoute', 'ui.bootstrap']);
 
 shopApp.config(['$routeProvider',
   function ($routeProvider) {
@@ -80,6 +80,12 @@ shopApp.controller('OrderCtrl', ['$scope', '$http',
         $scope.addItem = function() {
             $scope.order.OrderItems.push({});
         };
+        $scope.getCustomers = function (filter) {
+            return $http.get("http://localhost:60843/api/customer");
+        }
+        $scope.customerSelected = function (order, $item) {
+            order.CustomerId = $item.Id;
+        }
     }
 ]);
 
