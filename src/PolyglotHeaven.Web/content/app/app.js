@@ -20,9 +20,49 @@ shopApp.config(['$routeProvider',
         });
   }]);
 
-shopApp.controller('CustomerCtrl', ['$scope', '$http',
-    function($scope, $http) {
+shopApp.directive('commandContainer', function () {
+    return {
+        restrict: 'E',
+        transclude: 'true',
+        scope: {
+            submitText: "@",
+            commandName: "@",
+            command: "="
+        },
+        template: '<form role="form" ng-submit="sendCommand(command, commandName)">' +
+            '<div class="my-transclude"></div>' +
+            '<input type="submit" class="btn btn-default" value="{{submitText}}" />' +
+            '</div>',
+        controller: 'CommandContainerController',
+        link: function (scope, element, attrs, ctrl, transclude) {
+            transclude(scope.$parent, function (clone) {
+                element.find(".my-transclude").replaceWith(clone);
+            });
+        }
+    };
+});
+
+shopApp.controller('CommandContainerController', function ($scope, $http) {
+    var baseUrl = "/api/";
+    $scope.sendCommand = function (command, commandName) {
+        var url = baseUrl + commandName;
+        command.Id = "0C446CE4-4A12-492D-A624-C54CBF32DFC9";
+        $http.post(url, command).success(function (data) {
+            $scope.command = {};
+        }).error(function () {
+            alert("Failed to execute command: " + commandName);
+            console.log(command);
+        });
+    }
+});
+
+shopApp.controller('CustomerCtrl', ['$scope', 'executeCommandService',
+    function($scope, executeCommandService) {
         $scope.message = "This is a customer thingy";
+
+        $scope.createCustomer = function(customer) {
+            executeCommandService.execute(customer, 'customer');
+        }
     }
 ]);
 
@@ -36,3 +76,23 @@ shopApp.controller('OrderCtrl', ['$scope', '$http',
         $scope.message = "This is a order thingy";
     }
 ]);
+
+shopApp.service('executeCommandService', ['$http', function($http) {
+    var baseUrl = "http://localhost:60843/api/";
+
+    function createUrl(commandName) {
+        return baseUrl + commandName;
+    }
+
+    function execute(command, commandName) {
+        var url = createUrl(commandName);
+        command.Id = "0C446CE4-4A12-492D-A624-C54CBF32DFC9";
+        $http.post(url, command).then(function(data) {
+            alert(command.id + " " + command.name);
+        });
+    }
+
+    return {
+        execute: execute
+    };
+}])

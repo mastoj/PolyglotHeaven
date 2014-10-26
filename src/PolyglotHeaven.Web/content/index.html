@@ -18,14 +18,24 @@
     </head>
     <body ng-app="shopApp">
         <div class="container">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav nav">
+                        <li>
+                            <a href="#/order">Order</a>
+                        </li>
+                        <li>
+                            <a href="#/product">Product</a>
+                        </li>
+                        <li>
+                            <a href="#/customer">Customer</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
             <h1>Shop til you drop</h1>            
-        </div>
-        <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <a href="#/order">order</a>
-                    <a href="#/product">order</a>
-                    <a href="#/customer">order</a>
                     <ng-view></ng-view>
                 </div>
                 <div class="col-md-4">Yo</div>

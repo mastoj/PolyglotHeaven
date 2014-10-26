@@ -4,7 +4,6 @@ using Linky;
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
-using Microsoft.Owin.StaticFiles.Infrastructure;
 using Newtonsoft.Json;
 using Owin;
 
@@ -15,14 +14,13 @@ namespace PolyglotHeaven.Web
     {
         public void Configuration(IAppBuilder app)
         {
-
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Objects
-            };
             var configuration = new HttpConfiguration();
             configuration.MapHttpAttributeRoutes();
             configuration.EnsureInitialized();
+            configuration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings()
+            {
+                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+            };
             LinkyConfiguration.Configure(configuration);
             app.UseWebApi(configuration);
 
