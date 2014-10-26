@@ -16,14 +16,28 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body ng-app="shop">
-        <h1>Hello, world!</h1>
+    <body ng-app="shopApp">
+        <div class="container">
+            <h1>Shop til you drop</h1>            
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <a href="#/order">order</a>
+                    <a href="#/product">order</a>
+                    <a href="#/customer">order</a>
+                    <ng-view></ng-view>
+                </div>
+                <div class="col-md-4">Yo</div>
+            </div>
+        </div>
         
 
 
         <script src="/content/external/jquery/jquery.min.js"></script>
         <script src="/content/external/bootstrap/js/bootstrap.min.js"></script>
         <script src="/content/external/angular/angular.min.js"></script>
+        <script src="/content/external/angular/angular-route.min.js"></script>
         <script src="/content/app/app.js"></script>
     </body>
 </html>

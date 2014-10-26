@@ -100,6 +100,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\app\app.js" />
+    <Content Include="content\app\order\order.html" />
+    <Content Include="content\app\product\product.html" />
+    <Content Include="content\app\customer\customer.html" />
+    <Content Include="content\external\angular\angular-route.min.js" />
     <Content Include="content\external\angular\angular.min.js" />
     <Content Include="content\external\bootstrap\css\bootstrap-theme.css" />
     <Content Include="content\external\bootstrap\css\bootstrap-theme.min.css" />
@@ -118,6 +122,8 @@
     <Content Include="content\external\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="content\external\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="content\external\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="AppSettings.config" />
+    <Content Include="content\external\angular\angular-route.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -154,10 +160,7 @@
       <Name>PolyglotHeaven.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Api\Basket\" />
-    <Folder Include="Api\Order\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

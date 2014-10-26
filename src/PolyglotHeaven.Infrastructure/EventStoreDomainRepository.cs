@@ -18,9 +18,9 @@ namespace PolyglotHeaven.Infrastructure
             _connection = connection;
         }
 
-        private string AggregateToStreamName(Type type, Guid id)
+        private string AggregateToStreamName(Guid id)
         {
-            return string.Format("{0}-{1}-{2}", Category, type.Name, id);
+            return string.Format("{0}-{1}", Category, id);
         }
 
         public override IEnumerable<IEvent> Save<TAggregate>(TAggregate aggregate)
@@ -28,14 +28,14 @@ namespace PolyglotHeaven.Infrastructure
             var events = aggregate.UncommitedEvents().ToList();
             var expectedVersion = CalculateExpectedVersion(aggregate, events);
             var eventData = events.Select(CreateEventData);
-            var streamName = AggregateToStreamName(aggregate.GetType(), aggregate.Id);
+            var streamName = AggregateToStreamName(aggregate.Id);
             _connection.AppendToStreamAsync(streamName, expectedVersion, eventData).Wait();
             return events;
         }
 
         public override TResult GetById<TResult>(Guid id)
         {
-            var streamName = AggregateToStreamName(typeof(TResult), id);
+            var streamName = AggregateToStreamName(id);
             var eventsSlice = _connection.ReadStreamEventsForwardAsync(streamName, 0, int.MaxValue, false).Result;
             if (eventsSlice.Status == SliceReadStatus.StreamNotFound)
             {

@@ -18,18 +18,11 @@ namespace PolyglotHeaven.Service
 
         public void Start()
         {
-            _graphClient = CreateGraphClient();
+            _graphClient = Neo4jClientBuilder.Build();
+            DeleteAll(_graphClient);
             _indexer = CreateIndexer();
             _eventHandlerMapping = CreateEventHandlerMapping();
             ConnectToEventstore();
-        }
-
-        private GraphClient CreateGraphClient()
-        {
-            var graphClient = new GraphClient(new Uri("http://localhost:7474/db/data"));
-            graphClient.Connect();
-            DeleteAll(graphClient);
-            return graphClient;
         }
 
         private void DeleteAll(GraphClient graphClient)

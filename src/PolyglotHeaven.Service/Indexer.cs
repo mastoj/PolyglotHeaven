@@ -1,4 +1,5 @@
 using System;
+using PolyglotHeaven.Helpers;
 using PolyglotHeaven.Service.Documents;
 using Nest;
 
@@ -6,14 +7,12 @@ namespace PolyglotHeaven.Service
 {
     internal class Indexer
     {
-        private readonly ElasticClient _esClient;
+        private readonly IElasticClient _esClient;
         private string _index = "PolyglotHeaven";
 
         public Indexer()
         {
-            var settings = new ConnectionSettings(new Uri("http://192.168.50.4:9200/"));
-            settings.SetDefaultIndex(_index);
-            _esClient = new ElasticClient(settings);
+            _esClient = ElasticClientBuilder.BuildClient();
         }
 
         public TDocument Get<TDocument>(Guid id) where TDocument : class
