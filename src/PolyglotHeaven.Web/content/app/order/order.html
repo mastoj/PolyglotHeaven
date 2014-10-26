@@ -1,1 +1,20 @@
-﻿{{message}}
+﻿<command-container submit-text="Create customer" command-name="order" command="order">
+    <div class="form-group">
+        <label for="name">Select customer</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" ng-model="order.Name">
+    </div>
+    <div class="form-group order-items">
+        <label for="name">Add order items</label>
+        <div ng-repeat="item in order.OrderItems" class="row">
+            <div class="form-group col-lg-4 col-md-4">
+                <label for="name">Select product</label>
+                <input type="text" ng-model="item.ProductId" />
+            </div>
+            <div class="form-group col-lg-4 col-md-4">
+                <label for="name">Quantity</label>
+                <input type="number" ng-model="item.Quantity" />
+            </div>
+            </div>
+        <input type="button" ng-click="addItem()" value="Add item to list" />
+    </div>
+</command-container>

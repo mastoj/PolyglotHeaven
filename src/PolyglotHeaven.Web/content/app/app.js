@@ -74,6 +74,12 @@ shopApp.controller('ProductCtrl', ['$scope', '$http',
 shopApp.controller('OrderCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.message = "This is a order thingy";
+        $scope.order = {
+            OrderItems: []
+        };
+        $scope.addItem = function() {
+            $scope.order.OrderItems.push({});
+        };
     }
 ]);
 

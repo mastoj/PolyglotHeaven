@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Commands.fs" />
     <Compile Include="Events.fs" />
-    <Compile Include="CQRSShop.Contracts.Helpers.fs" />
+    <Compile Include="Helpers.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PolyglotHeaven.Infrastructure\PolyglotHeaven.Infrastructure.csproj">

@@ -67,9 +67,6 @@ namespace PolyglotHeaven.Infrastructure
             {
                 {
                     EventClrTypeHeader, @event.GetType().AssemblyQualifiedName
-                },
-                {
-                    "Domain", "Enheter"
                 }
             };
             var eventDataHeaders = SerializeObject(eventHeaders);

@@ -8,7 +8,7 @@ namespace PolyglotHeaven.Service
     internal class Indexer
     {
         private readonly IElasticClient _esClient;
-        private string _index = "PolyglotHeaven";
+        private string _index = "polyglotheaven";
 
         public Indexer()
         {

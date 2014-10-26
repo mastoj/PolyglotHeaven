@@ -40,6 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elasticsearch.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Elasticsearch.Net.1.2.1\lib\Elasticsearch.Net.dll</HintPath>
+    </Reference>
     <Reference Include="EventStore.ClientAPI, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EventStore.Client.3.0.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
@@ -61,6 +65,10 @@
     </Reference>
     <Reference Include="Microsoft.Owin.StaticFiles">
       <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.0\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="Nest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d535ef528f529166, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NEST.1.2.1\lib\Nest.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -136,9 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BasePostEndpoint.cs" />
-    <Compile Include="Api\Customer\CustomerEndpoints.cs" />
+    <Compile Include="Api\Customer\CustomerEndpointsController.cs" />
     <Compile Include="Api\GetEndpoint.cs" />
-    <Compile Include="Api\Product\PostEndpoint.cs" />
+    <Compile Include="Api\Order\OrderEndpointController.cs" />
+    <Compile Include="Api\Product\CreateProductEndpointController.cs" />
     <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

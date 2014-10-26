@@ -2,6 +2,8 @@
 open PolyglotHeaven.Infrastructure
 open System
 
+type OrderItem = {ProductId: Guid; Quantity: int}
+
 // Customer commands
 type CreateCustomer = {Id: Guid; Name: string } with interface ICommand
 
@@ -9,4 +11,4 @@ type CreateCustomer = {Id: Guid; Name: string } with interface ICommand
 type CreateProduct = {Id: Guid; Name: string; Price: int } with interface ICommand
 
 // Order commands
-type PlaceOrder = { Id: Guid; ProductId: Guid; Quantity: int } with interface ICommand
+type PlaceOrder = { Id: Guid; Items: OrderItem list } with interface ICommand
