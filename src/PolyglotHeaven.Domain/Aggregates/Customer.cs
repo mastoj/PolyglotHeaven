@@ -9,7 +9,6 @@ namespace PolyglotHeaven.Domain.Aggregates
         public Customer()
         {
             RegisterTransition<CustomerCreated>(Apply);
-            RegisterTransition<CustomerMarkedAsPreferred>(Apply);
         }
 
         private Customer(Guid id, string name) : this()
@@ -24,19 +23,9 @@ namespace PolyglotHeaven.Domain.Aggregates
             Id = obj.Id;
         }
 
-        private void Apply(CustomerMarkedAsPreferred obj)
-        {
-            Discount = obj.Discount;
-        }
-
         internal static IAggregate Create(Guid id, string name)
         {
             return new Customer(id, name);
-        }
-
-        internal void MakePreferred(int discount)
-        {
-            RaiseEvent(new CustomerMarkedAsPreferred(Id, discount));
         }
     }
 }

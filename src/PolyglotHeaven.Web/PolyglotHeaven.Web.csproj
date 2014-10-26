@@ -130,10 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BasePostEndpoint.cs" />
-    <Compile Include="Api\Basket\BasketEndpoints.cs" />
     <Compile Include="Api\Customer\CustomerEndpoints.cs" />
     <Compile Include="Api\GetEndpoint.cs" />
-    <Compile Include="Api\Order\OrderEndpoints.cs" />
     <Compile Include="Api\Product\PostEndpoint.cs" />
     <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,7 +154,10 @@
       <Name>PolyglotHeaven.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Api\Basket\" />
+    <Folder Include="Api\Order\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using PolyglotHeaven.Contracts.Events;
 using PolyglotHeaven.Helpers;
 using PolyglotHeaven.Service.Documents;
@@ -77,89 +76,17 @@ namespace PolyglotHeaven.Service
             return new Dictionary<Type, Action<object>>()
             {
                 {typeof (CustomerCreated), o => Handle(o as CustomerCreated)},
-                {typeof (CustomerMarkedAsPreferred), o => Handle(o as CustomerMarkedAsPreferred)},
-                {typeof (BasketCreated), o => Handle(o as BasketCreated)},
-                {typeof (ItemAdded), o => Handle(o as ItemAdded)},
-                {typeof (CustomerIsCheckingOutBasket), o => Handle(o as CustomerIsCheckingOutBasket)},
-                {typeof (BasketCheckedOut), o => Handle(o as BasketCheckedOut)},
-                {typeof (OrderCreated), o => Handle(o as OrderCreated)},
                 {typeof (ProductCreated), o => Handle(o as ProductCreated)}
             }; 
         }
 
-        private void Handle(OrderCreated evt)
+        private void Handle(OrderPlaced evt)
         {
-            var existinBasket = _indexer.Get<Basket>(evt.BasketId);
-            existinBasket.BasketState = BasketState.Paid;
-            _indexer.Index(existinBasket);
-
-            _graphClient.Cypher
-                .Match("(customer:Customer)-[:HAS_BASKET]->(basket:Basket)-[]->(product:Product)")
-                .Where((Basket basket) => basket.Id == evt.BasketId)
-                .Create("customer-[:BOUGHT]->product")
-                .ExecuteWithoutResults();
-        }
-
-        private void Handle(BasketCheckedOut evt)
-        {
-            var basket = _indexer.Get<Basket>(evt.Id);
-            basket.BasketState = BasketState.CheckedOut;
-            _indexer.Index(basket);
-        }
-
-        private void Handle(CustomerIsCheckingOutBasket evt)
-        {
-            var basket = _indexer.Get<Basket>(evt.Id);
-            basket.BasketState = BasketState.CheckingOut;
-            _indexer.Index(basket);
-        }
-
-        private void Handle(ItemAdded evt)
-        {
-            var existingBasket = _indexer.Get<Basket>(evt.Id);
-            var orderLines = existingBasket.OrderLines;
-            if (orderLines == null || orderLines.Length == 0)
-            {
-                existingBasket.OrderLines = new[] {evt.OrderLine};
-            }
-            else
-            {
-                var orderLineList = orderLines.ToList();
-                orderLineList.Add(evt.OrderLine);
-                existingBasket.OrderLines = orderLineList.ToArray();
-            }
-
-            _indexer.Index(existingBasket);
-
-            _graphClient.Cypher
-                .Match("(basket:Basket)", "(product:Product)")
-                .Where((Basket basket) => basket.Id == evt.Id)
-                .AndWhere((Product product) => product.Id == evt.OrderLine.ProductId)
-                .Create("basket-[:HAS_ORDERLINE {orderLine}]->product")
-                .WithParam("orderLine", evt.OrderLine)
-                .ExecuteWithoutResults();
-        }
-
-        private void Handle(BasketCreated evt)
-        {
-            var newBasket = new Basket()
-            {
-                Id = evt.Id,
-                OrderLines = null,
-                BasketState = BasketState.Shopping
-            };
-            _indexer.Index(newBasket);
-            _graphClient.Cypher
-                .Create("(basket:Basket {newBasket})")
-                .WithParam("newBasket", newBasket)
-                .ExecuteWithoutResults();
-
-            _graphClient.Cypher
-                .Match("(customer:Customer)", "(basket:Basket)")
-                .Where((Customer customer) => customer.Id == evt.CustomerId)
-                .AndWhere((Basket basket) => basket.Id == evt.Id)
-                .Create("customer-[:HAS_BASKET]->basket")
-                .ExecuteWithoutResults();
+            //_graphClient.Cypher
+            //    .Match("(customer:Customer)-[:ORDERED]->(order:Basket)-[]->(product:Product)")
+            //    .Where((Order order) => order.Id == evt.BasketId)
+            //    .Create("customer-[:BOUGHT]->product")
+            //    .ExecuteWithoutResults();
         }
 
         private void Handle(ProductCreated evt)
@@ -174,21 +101,6 @@ namespace PolyglotHeaven.Service
             _graphClient.Cypher
                 .Create("(product:Product {newProduct})")
                 .WithParam("newProduct", product)
-                .ExecuteWithoutResults();
-        }
-
-        private void Handle(CustomerMarkedAsPreferred evt)
-        {
-            var customer = _indexer.Get<Customer>(evt.Id);
-            customer.IsPreferred = true;
-            customer.Discount = evt.Discount;
-            _indexer.Index(customer);
-
-            _graphClient.Cypher
-                .Match("(c:Customer)")
-                .Where((Customer c) => c.Id == customer.Id)
-                .Set("c = {c}")
-                .WithParam("c", customer)
                 .ExecuteWithoutResults();
         }
 

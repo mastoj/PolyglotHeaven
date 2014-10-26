@@ -29,23 +29,9 @@ namespace PolyglotHeaven.Domain
 
             var customerCommandHandler = new CustomerCommandHandler(domainRepository);
             commandDispatcher.RegisterHandler<CreateCustomer>(customerCommandHandler);
-            commandDispatcher.RegisterHandler<MarkCustomerAsPreferred>(customerCommandHandler);
 
             var productCommandHandler = new ProductCommandHandler(domainRepository);
             commandDispatcher.RegisterHandler(productCommandHandler);
-
-            var basketCommandHandler = new BasketCommandHandler(domainRepository);
-            commandDispatcher.RegisterHandler<CreateBasket>(basketCommandHandler);
-            commandDispatcher.RegisterHandler<AddItemToBasket>(basketCommandHandler);
-            commandDispatcher.RegisterHandler<ProceedToCheckout>(basketCommandHandler);
-            commandDispatcher.RegisterHandler<CheckoutBasket>(basketCommandHandler);
-            commandDispatcher.RegisterHandler<MakePayment>(basketCommandHandler);
-
-            var orderCommandHanler = new OrderHandler(domainRepository);
-            commandDispatcher.RegisterHandler<ApproveOrder>(orderCommandHanler);
-            commandDispatcher.RegisterHandler<StartShippingProcess>(orderCommandHanler);
-            commandDispatcher.RegisterHandler<CancelOrder>(orderCommandHanler);
-            commandDispatcher.RegisterHandler<ShipOrder>(orderCommandHanler);
 
             return commandDispatcher;
         }

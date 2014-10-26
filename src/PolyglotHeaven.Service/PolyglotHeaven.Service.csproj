@@ -78,7 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Documents\Basket.cs" />
+    <Compile Include="Documents\Order.cs" />
     <Compile Include="Documents\Customer.cs" />
     <Compile Include="Documents\Product.cs" />
     <Compile Include="EventSerialization.cs" />

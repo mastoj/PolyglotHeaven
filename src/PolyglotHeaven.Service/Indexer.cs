@@ -29,7 +29,6 @@ namespace PolyglotHeaven.Service
         public void Init()
         {
             _esClient.CreateIndex(_index, y => y
-                .AddMapping<Basket>(m => m.MapFromAttributes())
                 .AddMapping<Customer>(m => m.MapFromAttributes())
                 .AddMapping<Product>(m => m.MapFromAttributes()));
         }

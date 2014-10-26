@@ -8,8 +8,7 @@ using PolyglotHeaven.Infrastructure.Exceptions;
 namespace PolyglotHeaven.Domain.CommandHandlers
 {
     internal class CustomerCommandHandler : 
-        IHandle<CreateCustomer>, 
-        IHandle<MarkCustomerAsPreferred>
+        IHandle<CreateCustomer>
     {
         private readonly IDomainRepository _domainRepository;
 
@@ -30,13 +29,6 @@ namespace PolyglotHeaven.Domain.CommandHandlers
                 // We expect not to find anything
             }
             return Customer.Create(command.Id, command.Name);
-        }
-
-        public IAggregate Handle(MarkCustomerAsPreferred command)
-        {
-            var customer = _domainRepository.GetById<Customer>(command.Id);
-            customer.MakePreferred(command.Discount);
-            return customer;
         }
     }
 }

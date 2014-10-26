@@ -15,16 +15,4 @@ namespace PolyglotHeaven.Web.Api.Customer
             return Execute(command);
         }
     }
-
-    [RoutePrefix("api/customer")]
-    public class CustomerEndpointController : BasePostEndpoint<MarkCustomerAsPreferred>
-    {
-        [Route("{id}/preferred")]
-        [LinksFrom(typeof(CreateCustomer), "makepreferred")]
-        public override HttpResponseMessage Post(MarkCustomerAsPreferred command)
-        {
-            return Execute(command);
-        }
-    }
-
 }

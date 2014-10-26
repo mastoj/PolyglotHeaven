@@ -43,14 +43,11 @@
     <Compile Include="Aggregates\Customer.cs" />
     <Compile Include="Aggregates\Order.cs" />
     <Compile Include="Aggregates\Product.cs" />
-    <Compile Include="Aggregates\Basket.cs" />
-    <Compile Include="CommandHandlers\BasketCommandHandler.cs" />
     <Compile Include="CommandHandlers\CustomerCommandHandler.cs" />
     <Compile Include="CommandHandlers\ProductCommandHandler.cs" />
     <Compile Include="DomainEntry.cs" />
     <Compile Include="Exceptions\CustomerAlreadyExistsException.cs" />
     <Compile Include="Exceptions\DuplicateAggregateException.cs" />
-    <Compile Include="CommandHandlers\OrderHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
