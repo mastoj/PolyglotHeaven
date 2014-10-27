@@ -42,9 +42,10 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers.fs" />
+    <Compile Include="Types.fs" />
     <Compile Include="Commands.fs" />
     <Compile Include="Events.fs" />
-    <Compile Include="Helpers.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PolyglotHeaven.Infrastructure\PolyglotHeaven.Infrastructure.csproj">

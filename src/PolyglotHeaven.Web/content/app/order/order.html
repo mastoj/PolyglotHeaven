@@ -9,19 +9,22 @@
     </div>
     <div class="form-group order-items">
         <label for="name">Add order items</label>
-        <div ng-repeat="item in order.OrderItems" class="row">
+        <div ng-repeat="item in order.Items" class="row">
             <div class="form-group col-lg-4 col-md-4">
-                <label for="name">Select product</label>
                 <input type="text" class="form-control" ng-model="item.Product" placeholder="Search for product"
                        typeahead="product as product.Name for product in getProducts($viewValue)" typeahead-editable="false"
                        typeahead-on-select="productSelected(item, $item)" />
             </div>
             <div class="form-group col-lg-4 col-md-4">
-                <label for="name">Quantity</label>
-                <input type="number" ng-model="item.Quantity" />
+                <input type="number" class="form-control" ng-model="item.Quantity" placeholder="Enter quantity"/>
             </div>
+            <div class="form-group col-lg-4 col-md-4">
+                <button type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> Delete item
+                </button>
             </div>
-        <input type="button" ng-click="addItem()" value="Add item to list" />
+        </div>
+        <input type="button" class="btn btn-default" ng-click="addItem()" value="Add item to list" />
     </div>
 </command-container>
         <!--<input type="text" class="form-control" id="name" placeholder="Search for customer" ng-model="order.Customer"

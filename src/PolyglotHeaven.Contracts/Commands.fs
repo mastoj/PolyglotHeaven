@@ -1,8 +1,7 @@
 ﻿namespace PolyglotHeaven.Contracts.Commands
+open PolyglotHeaven.Contracts.Types
 open PolyglotHeaven.Infrastructure
 open System
-
-type OrderItem = {ProductId: Guid; Quantity: int}
 
 // Customer commands
 type CreateCustomer = {Id: Guid; Name: string } with interface ICommand

@@ -14,23 +14,21 @@ namespace PolyglotHeaven.Service
         private Dictionary<Type, Action<object>> _eventHandlerMapping;
         private Position? _latestPosition;
         private IEventStoreConnection _connection;
-        private GraphClient _graphClient;
+        private GraphtIndexer _graphIndexer;
 
         public void Start()
         {
-            _graphClient = Neo4jClientBuilder.Build();
-            DeleteAll(_graphClient);
             _indexer = CreateIndexer();
+            _graphIndexer = CreateGraphIndexer();
             _eventHandlerMapping = CreateEventHandlerMapping();
             ConnectToEventstore();
         }
 
-        private void DeleteAll(GraphClient graphClient)
+        private GraphtIndexer CreateGraphIndexer()
         {
-            graphClient.Cypher.Match("(n)")
-                .OptionalMatch("(n)-[r]-()")
-                .Delete("n,r")
-                .ExecuteWithoutResults();
+            var indexer = new GraphtIndexer();
+            indexer.Init();
+            return indexer;
         }
 
         private Indexer CreateIndexer()
@@ -69,17 +67,14 @@ namespace PolyglotHeaven.Service
             return new Dictionary<Type, Action<object>>()
             {
                 {typeof (CustomerCreated), o => Handle(o as CustomerCreated)},
-                {typeof (ProductCreated), o => Handle(o as ProductCreated)}
+                {typeof (ProductCreated), o => Handle(o as ProductCreated)},
+                {typeof (OrderPlaced), o => Handle(o as OrderPlaced)}
             }; 
         }
 
         private void Handle(OrderPlaced evt)
         {
-            //_graphClient.Cypher
-            //    .Match("(customer:Customer)-[:ORDERED]->(order:Basket)-[]->(product:Product)")
-            //    .Where((Order order) => order.Id == evt.BasketId)
-            //    .Create("customer-[:BOUGHT]->product")
-            //    .ExecuteWithoutResults();
+            _graphIndexer.AddOrder(evt);
         }
 
         private void Handle(ProductCreated evt)
@@ -91,10 +86,7 @@ namespace PolyglotHeaven.Service
                 Price = evt.Price
             };
             _indexer.Index(product);
-            _graphClient.Cypher
-                .Create("(product:Product {newProduct})")
-                .WithParam("newProduct", product)
-                .ExecuteWithoutResults();
+            _graphIndexer.AddProduct(product);
         }
 
         private void Handle(CustomerCreated evt)
@@ -105,11 +97,7 @@ namespace PolyglotHeaven.Service
                 Name = evt.Name
             };
             _indexer.Index(customer);
-
-            _graphClient.Cypher
-                .Create("(customer:Customer {newCustomer})")
-                .WithParam("newCustomer", customer)
-                .ExecuteWithoutResults(); 
+            _graphIndexer.AddCustomer(customer);
         }
 
         public void Stop()

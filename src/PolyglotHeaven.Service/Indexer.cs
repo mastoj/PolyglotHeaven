@@ -21,7 +21,7 @@ namespace PolyglotHeaven.Service
 
         public void Index<TDocument>(TDocument document) where TDocument : class
         {
-//            _esClient.Index(document, y => y.Index(ElasticClientBuilder.IndexName));
+            _esClient.Index(document, y => y.Index(ElasticClientBuilder.IndexName));
         }
 
         public void Init()

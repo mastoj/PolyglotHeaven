@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\Customer.cs" />
+    <Compile Include="CommandHandlers\OrderCommandHandler.cs" />
+    <Compile Include="Services\LookupAggregate.cs" />
     <Compile Include="Aggregates\Order.cs" />
     <Compile Include="Aggregates\Product.cs" />
     <Compile Include="CommandHandlers\CustomerCommandHandler.cs" />

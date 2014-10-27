@@ -33,6 +33,9 @@ namespace PolyglotHeaven.Domain
             var productCommandHandler = new ProductCommandHandler(domainRepository);
             commandDispatcher.RegisterHandler(productCommandHandler);
 
+            var orderCommandHandler = new OrderCommandHandler(domainRepository);
+            commandDispatcher.RegisterHandler(orderCommandHandler);
+
             return commandDispatcher;
         }
 

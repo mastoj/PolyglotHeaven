@@ -1,6 +1,9 @@
 ﻿namespace PolyglotHeaven.Contracts.Events
+
+open PolyglotHeaven.Contracts.Types
 open PolyglotHeaven.Infrastructure
 open System
+
 
 // Customer events
 type CustomerCreated = {Id: Guid; Name: string } 
@@ -11,6 +14,6 @@ type ProductCreated = {Id: Guid; Name: string; Price: int }
     with interface IEvent with member this.Id with get() = this.Id
 
 // Order commands
-type OrderPlaced = { Id: Guid; ProductId: Guid; Quantity: int; Price: int; Discount: int; DiscountedPrice: int } 
+type OrderPlaced = { Id: Guid; CustomerId: Guid; Items: OrderItem list } 
     with interface IEvent with member this.Id with get() = this.Id
 

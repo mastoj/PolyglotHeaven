@@ -33,7 +33,7 @@ shopApp.directive('commandContainer', function () {
         },
         template: '<form role="form" ng-submit="sendCommand(command, commandName)">' +
             '<div class="my-transclude"></div>' +
-            '<input type="submit" class="btn btn-default" value="{{submitText}}" />' +
+            '<input type="submit" class="btn btn-success" value="{{submitText}}" />' +
             '</div>',
         controller: 'CommandContainerController',
         link: function (scope, element, attrs, ctrl, transclude) {
@@ -70,29 +70,23 @@ shopApp.controller('CommandContainerController', function ($scope, $http) {
     }
 });
 
-shopApp.controller('CustomerCtrl', ['$scope', 'executeCommandService',
-    function($scope, executeCommandService) {
-        $scope.message = "This is a customer thingy";
-
-        $scope.createCustomer = function(customer) {
-            executeCommandService.execute(customer, 'customer');
-        }
+shopApp.controller('CustomerCtrl', ['$scope',
+    function($scope) {
     }
 ]);
 
 shopApp.controller('ProductCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-      $scope.message = "This is a product thingy";
+  function ($scope) {
   }]);
 
 shopApp.controller('OrderCtrl', ['$scope', '$http', 'debounce',
     function($scope, $http, debounce) {
         $scope.message = "This is a order thingy";
         $scope.order = {
-            OrderItems: []
+            Items: []
         };
         $scope.addItem = function() {
-            $scope.order.OrderItems.push({});
+            $scope.order.Items.push({});
         };
 
         var lazyGetCustomers = debounce(function (filter) {
@@ -118,6 +112,13 @@ shopApp.controller('OrderCtrl', ['$scope', '$http', 'debounce',
         $scope.productSelected = function(item, $item) {
             item.ProductId = $item.Id;
         };
+
+        $scope.deleteItem = function (item) {
+            var index = $scope.order.Items.indexOf(item);
+            if (index > -1) {
+                $scope.order.Items.splice(index, 1);
+            }
+        }
     }
 ]);
 

@@ -44,6 +44,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EventStore.Client.3.0.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Neo4jClient, Version=1.0.0.658, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Neo4jClient.1.0.0.658\lib\net40\Neo4jClient.dll</HintPath>
@@ -82,6 +83,7 @@
     <Compile Include="Documents\Customer.cs" />
     <Compile Include="Documents\Product.cs" />
     <Compile Include="EventSerialization.cs" />
+    <Compile Include="GraphtIndexer.cs" />
     <Compile Include="Indexer.cs" />
     <Compile Include="IndexingServie.cs" />
     <Compile Include="Program.cs" />
