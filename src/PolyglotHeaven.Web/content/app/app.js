@@ -152,3 +152,34 @@ shopApp.factory('debounce', ['$timeout', '$q', function ($timeout, $q) {
         };
     };
 }]);
+
+shopApp.controller('ESPollingController', function ($scope, $http) {
+    $scope.events = [];
+    function getEvents(stream) {
+        var currentLink = stream;
+        var config = { headers: { "ES-LongPoll": 15 } };
+        $http
+            .get(stream + "?embed=body", config)
+            .success(function (data) {
+                var events = data.entries.map(function (e) {
+                    return JSON.parse(e.data);
+                });
+                events.reverse().forEach(function (e) {
+                    $scope.events.unshift(e);
+                });
+                var previousLink = data.links.filter(function (l) {
+                    return l.relation === "previous";
+                });
+                currentLink = stream;
+                if (previousLink.length > 0) {
+                    currentLink = previousLink[0].uri;
+                }
+                getEvents(currentLink);
+            })
+        .error(function () {
+            getEvents(currentLink);
+        });
+    }
+
+    getEvents("http://192.168.50.4:2113/" + "streams/%24ce-PolyglotHeaven");
+});

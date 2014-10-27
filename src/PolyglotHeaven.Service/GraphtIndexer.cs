@@ -46,7 +46,7 @@ namespace PolyglotHeaven.Service
 
         public void AddOrder(OrderPlaced evt)
         {
-            GraphOrder newOrder = new GraphOrder(evt.Id);
+            var newOrder = new GraphOrder(evt.Id);
             _graphClient.Cypher
                 .Match("(customer:Customer)")
                 .Where((Customer customer) => customer.Id == evt.CustomerId)
@@ -60,7 +60,7 @@ namespace PolyglotHeaven.Service
                     .Match("(product:Product)", "(order:Order)")
                     .Where((Product product) => product.Id == orderItem.ProductId)
                     .AndWhere((GraphOrder order) => order.Id == newOrder.Id)
-                    .Create("order-[:INCLUDES {Quantity: {Quantity}}]->product")
+                    .CreateUnique("order-[:INCLUDES {Quantity: {Quantity}}]->product")
                     .WithParam("Quantity", orderItem.Quantity)
                     .ExecuteWithoutResults();
 
