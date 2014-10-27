@@ -134,6 +134,7 @@
     <Content Include="content\external\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="AppSettings.config" />
     <Content Include="content\external\angular\angular-route.min.js.map" />
+    <Content Include="content\external\angular\angular.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -146,10 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BasePostEndpoint.cs" />
-    <Compile Include="Api\Customer\CustomerEndpointsController.cs" />
+    <Compile Include="Api\Customer\CustomerController.cs" />
     <Compile Include="Api\GetEndpoint.cs" />
     <Compile Include="Api\Order\OrderEndpointController.cs" />
-    <Compile Include="Api\Product\CreateProductEndpointController.cs" />
+    <Compile Include="Api\Product\ProductsController.cs" />
     <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

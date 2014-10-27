@@ -1,5 +1,7 @@
 ﻿var shopApp = angular.module('shopApp', ['ngRoute', 'ui.bootstrap']);
 
+shopApp.baseUrl = "/api/";
+
 shopApp.config(['$routeProvider',
   function ($routeProvider) {
       $routeProvider.
@@ -43,10 +45,22 @@ shopApp.directive('commandContainer', function () {
 });
 
 shopApp.controller('CommandContainerController', function ($scope, $http) {
-    var baseUrl = "/api/";
     $scope.sendCommand = function (command, commandName) {
-        var url = baseUrl + commandName;
-        command.Id = "0C446CE4-4A12-492D-A624-C54CBF32DFC9";
+        var url = shopApp.baseUrl + commandName;
+
+        var guid = (function () {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                           .toString(16)
+                           .substring(1);
+            }
+            return function () {
+                return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                       s4() + '-' + s4() + s4() + s4();
+            };
+        })();
+
+        command.Id = guid();
         $http.post(url, command).success(function (data) {
             $scope.command = {};
         }).error(function () {
@@ -71,8 +85,8 @@ shopApp.controller('ProductCtrl', ['$scope', '$http',
       $scope.message = "This is a product thingy";
   }]);
 
-shopApp.controller('OrderCtrl', ['$scope', '$http',
-    function($scope, $http) {
+shopApp.controller('OrderCtrl', ['$scope', '$http', 'debounce',
+    function($scope, $http, debounce) {
         $scope.message = "This is a order thingy";
         $scope.order = {
             OrderItems: []
@@ -80,33 +94,60 @@ shopApp.controller('OrderCtrl', ['$scope', '$http',
         $scope.addItem = function() {
             $scope.order.OrderItems.push({});
         };
-        $scope.getCustomers = function (filter) {
-            return $http.get("http://localhost:60843/api/customer").then(function(response) {
+
+        var lazyGetCustomers = debounce(function (filter) {
+            return $http.get(shopApp.baseUrl + "customer?query=" + filter).then(function(response) {
                 return response.data;
             });
-        }
-        $scope.customerSelected = function (order, $item) {
+        }, 400);
+        $scope.getCustomers = function(filter) {
+            return lazyGetCustomers(filter);
+        };
+        $scope.customerSelected = function(order, $item) {
             order.CustomerId = $item.Id;
-        }
+        };
+
+        var lazyGetProducts = debounce(function (filter) {
+            return $http.get(shopApp.baseUrl + "product?query=" + filter).then(function (response) {
+                return response.data;
+            });
+        }, 400);
+        $scope.getProducts = function (filter) {
+            return lazyGetProducts(filter);
+        };
+        $scope.productSelected = function(item, $item) {
+            item.ProductId = $item.Id;
+        };
     }
 ]);
 
-shopApp.service('executeCommandService', ['$http', function($http) {
-    var baseUrl = "http://localhost:60843/api/";
-
-    function createUrl(commandName) {
-        return baseUrl + commandName;
-    }
-
-    function execute(command, commandName) {
-        var url = createUrl(commandName);
-        command.Id = "0C446CE4-4A12-492D-A624-C54CBF32DFC9";
-        $http.post(url, command).then(function(data) {
-            alert(command.id + " " + command.name);
-        });
-    }
-
-    return {
-        execute: execute
+shopApp.factory('debounce', ['$timeout', '$q', function ($timeout, $q) {
+    // The service is actually this function, which we call with the func
+    // that should be debounced and how long to wait in between calls
+    return function debounce(func, wait, immediate) {
+        var timeout;
+        // Create a deferred object that will be resolved when we need to
+        // actually call the func
+        var deferred = $q.defer();
+        return function () {
+            var context = this, args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) {
+                    deferred.resolve(func.apply(context, args));
+                    deferred = $q.defer();
+                }
+            };
+            var callNow = immediate && !timeout;
+            if (timeout) {
+                $timeout.cancel(timeout);
+            }
+            timeout = $timeout(later, wait);
+            if (callNow) {
+                deferred.resolve(func.apply(context, args));
+                deferred = $q.defer();
+            }
+            return deferred.promise;
+        };
     };
-}])
+}]);

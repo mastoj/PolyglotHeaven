@@ -1,19 +1,17 @@
 ﻿using System;
-using Neo4jClient.Serialization;
 using Nest;
-using Newtonsoft.Json;
 
 namespace PolyglotHeaven.Helpers
 {
     public static class ElasticClientBuilder
     {
-        private static string _index = "PolyglotHeaven";
+        public static string IndexName = "polyglotheaven";
 
         public static IElasticClient BuildClient()
         {
             var elasticUrl = "ElasticUrl".GetConfigSetting(y => new Uri(y), () => new Uri("http://192.168.50.4:9200/"));
             var settings = new ConnectionSettings(elasticUrl);
-            settings.SetDefaultIndex(_index);
+            settings.SetDefaultIndex(IndexName);
             var esClient = new ElasticClient(settings);
             return esClient;
         }

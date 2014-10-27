@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="name">Select customer</label>
         <input type="text" class="form-control" id="name" placeholder="Search for customer" ng-model="order.Customer"
-               typeahead="customer as customer.Name for customer in getCustomers()" typeahead-editable="false"
+               typeahead="customer as customer.Name for customer in getCustomers($viewValue)" typeahead-editable="false"
                typeahead-on-select="customerSelected(order, $item)" />
         
         <!--typeahead-input-formatter="$model.Name"-->
@@ -12,7 +12,9 @@
         <div ng-repeat="item in order.OrderItems" class="row">
             <div class="form-group col-lg-4 col-md-4">
                 <label for="name">Select product</label>
-                <input type="text" ng-model="item.ProductId" />
+                <input type="text" class="form-control" ng-model="item.Product" placeholder="Search for product"
+                       typeahead="product as product.Name for product in getProducts($viewValue)" typeahead-editable="false"
+                       typeahead-on-select="productSelected(item, $item)" />
             </div>
             <div class="form-group col-lg-4 col-md-4">
                 <label for="name">Quantity</label>

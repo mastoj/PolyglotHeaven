@@ -8,6 +8,7 @@ using PolyglotHeaven.Infrastructure;
 
 namespace PolyglotHeaven.Web.Api
 {
+    [RoutePrefix("api/commands")]
     public abstract class BasePostEndpoint<TCommand> : ApiController where TCommand : ICommand
     {
         public abstract HttpResponseMessage Post(TCommand command);
