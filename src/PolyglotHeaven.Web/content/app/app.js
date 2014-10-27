@@ -81,7 +81,9 @@ shopApp.controller('OrderCtrl', ['$scope', '$http',
             $scope.order.OrderItems.push({});
         };
         $scope.getCustomers = function (filter) {
-            return $http.get("http://localhost:60843/api/customer");
+            return $http.get("http://localhost:60843/api/customer").then(function(response) {
+                return response.data;
+            });
         }
         $scope.customerSelected = function (order, $item) {
             order.CustomerId = $item.Id;
