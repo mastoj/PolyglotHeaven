@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using PolyglotHeaven.Helpers;
 using PolyglotHeaven.Service.Documents;
 using Nest;
@@ -27,10 +29,26 @@ namespace PolyglotHeaven.Service
         public void Init()
         {
             _esClient.DeleteIndex(did => did.Index(ElasticClientBuilder.IndexName));
-            _esClient.CreateIndex(cid => cid
+            var result = _esClient.CreateIndex(cid => cid
                 .Index(ElasticClientBuilder.IndexName)
+                .Analysis(ad => ad
+                    .Tokenizers(fd => fd
+                        .Add("my_edge_ngram_tokenizer", new EdgeNGramTokenizer()
+                            {
+                                MaxGram = 8,
+                                MinGram = 2,
+                                TokenChars = new[] { "letter", "digit" }
+                            }))
+                    .Analyzers(fd => fd
+                        .Add("my_edge_ngram_analyzer", new CustomAnalyzer("my_edge_ngram_analyzer")
+                        {
+                            Tokenizer = "my_edge_ngram_tokenizer",
+                            Filter = new List<string>() {"standard", "lowercase"}
+                        })))
                 .AddMapping<Customer>(m => m.MapFromAttributes())
                 .AddMapping<Product>(m => m.MapFromAttributes()));
+//            SetupAnalyzer(_esClient);
+            var requestString = UTF8Encoding.UTF8.GetString(result.ConnectionStatus.Request);
         }
 
 

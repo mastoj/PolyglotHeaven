@@ -23,7 +23,9 @@ namespace PolyglotHeaven.Web.Api.Customer
         [HttpGet]
         public HttpResponseMessage Get(string query = null)
         {
-            var searchResult = _esClient.Search<Service.Documents.Customer>(sd => sd.QueryString(query).Take(10));
+            var searchResult = _esClient.Search<Service.Documents.Customer>(sd => sd
+                .Query(qd => qd
+                    .Match(mqd => mqd.OnField(p => p.Name).Query(query))).Take(10));
 
             return Request.CreateResponse(searchResult.Documents);
         }
