@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PolyglotHeaven.Domain;
-using PolyglotHeaven.Helpers;
 using PolyglotHeaven.Infrastructure;
 
 namespace PolyglotHeaven.Web.Api
@@ -19,17 +18,9 @@ namespace PolyglotHeaven.Web.Api
         {
             get
             {
-                _domainEntry = _domainEntry ?? CreateDomainEntry();
+                _domainEntry = _domainEntry ?? ApplicationConfiguration.CreateDomainEntry();
                 return _domainEntry;
             }
-        }
-
-        private DomainEntry CreateDomainEntry()
-        {
-            var connection = EventStoreConnectionWrapper.Connect();
-            var domainRepository = new EventStoreDomainRepository(connection);
-            var domainEntry = new DomainEntry(domainRepository);
-            return domainEntry;
         }
 
         public HttpResponseMessage Execute(TCommand command)
