@@ -3,7 +3,7 @@ using System.Web.Http;
 using Linky;
 using PolyglotHeaven.Contracts.Commands;
 
-namespace PolyglotHeaven.Web.Api.Order
+namespace PolyglotHeaven.Web.Api
 {
     [RoutePrefix("api/order")]
     public class OrderEndpointController : BasePostEndpoint<PlaceOrder>

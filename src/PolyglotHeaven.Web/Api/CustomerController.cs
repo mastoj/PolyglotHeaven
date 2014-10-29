@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Web.Http;
+using Linky;
 using Nest;
 using PolyglotHeaven.Contracts.Commands;
-using Linky;
 using PolyglotHeaven.Helpers;
 
-namespace PolyglotHeaven.Web.Api.Customer
+namespace PolyglotHeaven.Web.Api
 {
     [RoutePrefix("api/customer")]
     public class CustomerController : BasePostEndpoint<CreateCustomer>

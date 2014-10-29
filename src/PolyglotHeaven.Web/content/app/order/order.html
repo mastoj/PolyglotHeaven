@@ -20,12 +20,18 @@
                 <input type="number" class="form-control" ng-model="item.Quantity" placeholder="Enter quantity"/>
             </div>
             <div class="form-group col-lg-4 col-md-4">
-                <button type="button" class="btn btn-danger">
+                <button type="button" class="btn btn-danger" ng-click="deleteItem(item)">
                     <span class="glyphicon glyphicon-trash"></span> Delete item
                 </button>
             </div>
         </div>
         <input type="button" class="btn btn-default" ng-click="addItem()" value="Add item to list" />
+    </div>
+    <div ng-show="recommendations.length">
+        <h3>Recommendations</h3>
+        <ul>
+            <li ng-repeat="rec in recommendations">{{rec.Product.Name}}</li>
+        </ul>        
     </div>
 </command-container>
         <!--<input type="text" class="form-control" id="name" placeholder="Search for customer" ng-model="order.Customer"

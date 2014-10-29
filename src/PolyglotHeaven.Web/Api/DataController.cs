@@ -8,7 +8,7 @@ using PolyglotHeaven.Contracts.Commands;
 using PolyglotHeaven.Contracts.Types;
 using PolyglotHeaven.Domain;
 
-namespace PolyglotHeaven.Web.Api.Data
+namespace PolyglotHeaven.Web.Api
 {
     [RoutePrefix("api/data")]
     public class DataController : ApiController

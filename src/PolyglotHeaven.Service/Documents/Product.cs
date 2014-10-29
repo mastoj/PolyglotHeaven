@@ -7,6 +7,7 @@ namespace PolyglotHeaven.Service.Documents
     {
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public Guid Id { get; set; }
+        [ElasticProperty(Analyzer = "my_edge_ngram_analyzer")]
         public string Name { get; set; }
         public int Price { get; set; }
     }

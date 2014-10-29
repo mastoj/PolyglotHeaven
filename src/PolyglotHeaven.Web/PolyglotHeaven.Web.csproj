@@ -164,11 +164,11 @@
     <Compile Include="Api\RecommendationsController.cs" />
     <Compile Include="ApplicationConfiguration.cs" />
     <Compile Include="Api\BasePostEndpoint.cs" />
-    <Compile Include="Api\Customer\CustomerController.cs" />
-    <Compile Include="Api\Data\DataController.cs" />
+    <Compile Include="Api\CustomerController.cs" />
+    <Compile Include="Api\DataController.cs" />
     <Compile Include="Api\GetEndpoint.cs" />
-    <Compile Include="Api\Order\OrderEndpointController.cs" />
-    <Compile Include="Api\Product\ProductsController.cs" />
+    <Compile Include="Api\OrderEndpointController.cs" />
+    <Compile Include="Api\ProductsController.cs" />
     <Content Include="content\css\site.css" />
     <Compile Include="OwinAppSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -89,6 +89,16 @@ shopApp.controller('OrderCtrl', ['$scope', '$http', 'debounce',
             $scope.order.Items.push({});
         };
 
+        var searchForRecommendations = function () {
+            var productIds = $scope.order.Items.map(function(item) {
+                return item.ProductId;
+            });
+            var query = { ProductIds: productIds };
+            $http.post(shopApp.baseUrl + "recommendation", query).then(function(response) {
+                $scope.recommendations = response.data;
+            });
+        };
+
         var lazyGetCustomers = debounce(function (filter) {
             return $http.get(shopApp.baseUrl + "customer?query=" + filter).then(function(response) {
                 return response.data;
@@ -109,8 +119,9 @@ shopApp.controller('OrderCtrl', ['$scope', '$http', 'debounce',
         $scope.getProducts = function (filter) {
             return lazyGetProducts(filter);
         };
-        $scope.productSelected = function(item, $item) {
+        $scope.productSelected = function (item, $item) {
             item.ProductId = $item.Id;
+            searchForRecommendations();
         };
 
         $scope.deleteItem = function (item) {
@@ -118,6 +129,7 @@ shopApp.controller('OrderCtrl', ['$scope', '$http', 'debounce',
             if (index > -1) {
                 $scope.order.Items.splice(index, 1);
             }
+            searchForRecommendations();
         }
     }
 ]);

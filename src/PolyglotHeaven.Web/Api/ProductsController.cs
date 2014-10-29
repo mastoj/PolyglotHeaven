@@ -1,11 +1,11 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
+using Linky;
 using Nest;
 using PolyglotHeaven.Contracts.Commands;
-using Linky;
 using PolyglotHeaven.Helpers;
 
-namespace PolyglotHeaven.Web.Api.Product
+namespace PolyglotHeaven.Web.Api
 {
     [RoutePrefix("api/product")]
     public class ProductsController : BasePostEndpoint<CreateProduct>
