@@ -59,8 +59,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #  config.vm.network :forwarded_port, guest: 1113, host: 1113, id: "eventstore1113", auto_correct: true
 #  config.vm.network :forwarded_port, guest: 7474, host: 7474, id: "neo4j", auto_correct: true
 
-  config.vm.synced_folder "C:/Shared", "c:/files"
-
   config.vm.provision "shell", inline: $script
 
   config.vm.provision :puppet do |puppet|
