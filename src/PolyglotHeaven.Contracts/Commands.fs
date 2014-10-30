@@ -10,4 +10,4 @@ type CreateCustomer = {Id: Guid; Name: string } with interface ICommand
 type CreateProduct = {Id: Guid; Name: string; Price: int } with interface ICommand
 
 // Order commands
-type PlaceOrder = { Id: Guid; CustomerId: Guid; Items: OrderItem list } with interface ICommand
+

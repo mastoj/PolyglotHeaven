@@ -43,29 +43,6 @@ namespace PolyglotHeaven.Service
                 .WithParam("newCustomer", customer)
                 .ExecuteWithoutResults();
         }
-
-        public void AddOrder(OrderPlaced evt)
-        {
-            var newOrder = new GraphOrder(evt.Id);
-            _graphClient.Cypher
-                .Match("(customer:Customer)")
-                .Where((Customer customer) => customer.Id == evt.CustomerId)
-                .Create("customer-[:PLACED_ORDER]->(order: Order {order})")
-                .WithParam("order", newOrder)
-                .ExecuteWithoutResults();
-
-            foreach (var orderItem in evt.Items)
-            {
-                _graphClient.Cypher
-                    .Match("(product:Product)", "(order:Order)")
-                    .Where((Product product) => product.Id == orderItem.ProductId)
-                    .AndWhere((GraphOrder order) => order.Id == newOrder.Id)
-                    .CreateUnique("order-[:INCLUDES {Quantity: {Quantity}}]->product")
-                    .WithParam("Quantity", orderItem.Quantity)
-                    .ExecuteWithoutResults();
-
-            }
-        }
     }
 
     public class GraphOrder

@@ -14,6 +14,4 @@ type ProductCreated = {Id: Guid; Name: string; Price: int }
     with interface IEvent with member this.Id with get() = this.Id
 
 // Order commands
-type OrderPlaced = { Id: Guid; CustomerId: Guid; Items: OrderItem list } 
-    with interface IEvent with member this.Id with get() = this.Id
 

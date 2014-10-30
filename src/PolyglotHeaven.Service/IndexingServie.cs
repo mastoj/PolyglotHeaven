@@ -67,14 +67,8 @@ namespace PolyglotHeaven.Service
             return new Dictionary<Type, Action<object>>()
             {
                 {typeof (CustomerCreated), o => Handle(o as CustomerCreated)},
-                {typeof (ProductCreated), o => Handle(o as ProductCreated)},
-                {typeof (OrderPlaced), o => Handle(o as OrderPlaced)}
+                {typeof (ProductCreated), o => Handle(o as ProductCreated)}
             }; 
-        }
-
-        private void Handle(OrderPlaced evt)
-        {
-            _graphIndexer.AddOrder(evt);
         }
 
         private void Handle(ProductCreated evt)
