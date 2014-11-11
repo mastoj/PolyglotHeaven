@@ -11,4 +11,7 @@ node 'polyglot' {
 	include neo4j
 
 	elasticsearch::plugin { 'marvel': }
+	package { 'procexp':
+		ensure => '15.13',
+	}
 }
