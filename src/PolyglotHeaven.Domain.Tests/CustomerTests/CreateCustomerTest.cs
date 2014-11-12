@@ -23,7 +23,7 @@ namespace PolyglotHeaven.Domain.Tests.CustomerTests
         {
             Guid id = Guid.NewGuid();
             Given(new CustomerCreated(id, "Something I don't care about"));
-            WhenThrows<CustomerAlreadyExistsException>(new CreateCustomer(id, "Tomas"));
+            WhenThrows<CustomerAlreadyExistsException, CreateCustomer>(new CreateCustomer(id, "Tomas"));
         }
     }
 }

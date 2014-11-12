@@ -28,7 +28,7 @@ namespace PolyglotHeaven.Domain
             var commandDispatcher = new CommandDispatcher(domainRepository, preExecutionPipe, postExecutionPipe);
 
             var customerCommandHandler = new CustomerCommandHandler(domainRepository);
-            commandDispatcher.RegisterHandler<CreateCustomer>(customerCommandHandler);
+            commandDispatcher.RegisterHandler(customerCommandHandler);
 
             var productCommandHandler = new ProductCommandHandler(domainRepository);
             commandDispatcher.RegisterHandler(productCommandHandler);
