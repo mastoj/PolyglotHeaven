@@ -25,7 +25,7 @@ namespace PolyglotHeaven.Domain.Tests.ProductTests
         {
             Guid id = Guid.NewGuid();
             Given(new ProductCreated(id, "Something I don't care about", 9999));
-            WhenThrows<ProductAlreadyExistsException>(new CreateProduct(id, "Sugar", 999));
+            WhenThrows<ProductAlreadyExistsException, CreateProduct>(new CreateProduct(id, "Sugar", 999));
         }
     }
 }

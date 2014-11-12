@@ -27,7 +27,7 @@ namespace PolyglotHeaven.Tests
             _preConditions = new Dictionary<Guid, IEnumerable<IEvent>>();
         }
 
-        protected void When(ICommand command)
+        protected void When<TCommand>(TCommand command) where TCommand : ICommand
         {
             var application = BuildApplication();
             application.ExecuteCommand(command);
@@ -45,7 +45,9 @@ namespace PolyglotHeaven.Tests
             }
         }
 
-        protected void WhenThrows<TException>(ICommand command) where TException : Exception
+        protected void WhenThrows<TException, TCommand>(TCommand command) 
+            where TException : Exception 
+            where TCommand : ICommand
         {
             try
             {

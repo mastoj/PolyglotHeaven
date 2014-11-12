@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PolyglotHeaven.Contracts.Events;
 using PolyglotHeaven.Helpers;
+using PolyglotHeaven.Infrastructure;
 using PolyglotHeaven.Service.Documents;
 using EventStore.ClientAPI;
 using Neo4jClient;
@@ -11,17 +12,25 @@ namespace PolyglotHeaven.Service
     internal class IndexingServie
     {
         private Indexer _indexer;
-        private Dictionary<Type, Action<object>> _eventHandlerMapping;
         private Position? _latestPosition;
         private IEventStoreConnection _connection;
         private GraphtIndexer _graphIndexer;
+        private ActionRouter _actionRouter;
 
         public void Start()
         {
             _indexer = CreateIndexer();
             _graphIndexer = CreateGraphIndexer();
-            _eventHandlerMapping = CreateEventHandlerMapping();
+            _actionRouter = CreateActionRouter();
             ConnectToEventstore();
+        }
+
+        private ActionRouter CreateActionRouter()
+        {
+            var actionRouter = new ActionRouter();
+            actionRouter.Add<CustomerCreated>(Handle);
+            actionRouter.Add<ProductCreated>(Handle);
+            return actionRouter;
         }
 
         private GraphtIndexer CreateGraphIndexer()
@@ -53,22 +62,9 @@ namespace PolyglotHeaven.Service
             var @event = EventSerialization.DeserializeEvent(arg2.OriginalEvent);
             if (@event != null)
             {
-                var eventType = @event.GetType();
-                if (_eventHandlerMapping.ContainsKey(eventType))
-                {
-                    _eventHandlerMapping[eventType](@event);
-                }
+                _actionRouter.Execute(@event);
             }
             _latestPosition = arg2.OriginalPosition;
-        }
-
-        private Dictionary<Type, Action<object>> CreateEventHandlerMapping()
-        {
-            return new Dictionary<Type, Action<object>>()
-            {
-                {typeof (CustomerCreated), o => Handle(o as CustomerCreated)},
-                {typeof (ProductCreated), o => Handle(o as ProductCreated)}
-            }; 
         }
 
         private void Handle(ProductCreated evt)
