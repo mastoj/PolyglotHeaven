@@ -45,7 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "kensykora/windows_2012_r2_standard"
   # Comment out the line below to use the one from Vagrant cloud instead
-  config.vm.box_url = "C:/boxes/win2012-R2.box"
+#  config.vm.box_url = "C:/boxes/win2012-R2.box"
   config.vm.communicator = "winrm"
 
   config.vm.provider :virtualbox do |v, override|
