@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 
@@ -18,7 +20,22 @@ namespace PolyglotHeaven.Helpers
             var endPoint = new IPEndPoint(EventStoreIP, EventStorePort);
             _connection = EventStoreConnection.Create(settings, endPoint, null);
             _connection.ConnectAsync().Wait();
+            EnableCategoryProjection();
             return _connection;
+        }
+
+        private static void EnableCategoryProjection()
+        {
+            var url = new Uri(string.Format("http://{0}:2113/projection/$by_category/command/enable", EventStoreIP));
+            var credentials = new NetworkCredential(EventStoreUser, EventStorePassword);
+            var handler = new HttpClientHandler
+            {
+                Credentials = credentials
+            };
+            using (var httpClient = new HttpClient(handler))
+            {
+                httpClient.PostAsync(url, null).Wait();
+            }
         }
 
         private static string EventStoreUser
