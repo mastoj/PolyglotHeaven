@@ -193,5 +193,5 @@ shopApp.controller('ESPollingController', function ($scope, $http) {
         });
     }
 
-    getEvents("http://192.168.50.69:2113/" + "streams/%24ce-PolyglotHeaven");
+    getEvents("http://192.168.99.100:2113/" + "streams/%24ce-PolyglotHeaven");
 });
